@@ -10,11 +10,15 @@ public class BBoard {		// This is your main file that connects all classes.
 	public String title; 
 	public String topic; 
 	public String CurrentUser;
+	public String password;
 	
 	// Default constructor that creates a board with a defaulttitle, empty user and message lists,
 	// and no current user
 	public BBoard() {
 		title = "";
+		topic = "";
+		CurrentUser = "";
+		password = "";
 		Userlist;
 		Messagelist;
 	}
@@ -22,6 +26,9 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Same as the default constructor except it sets the title of the board
 	public BBoard(String ttl) {	
 		title = ttl;
+		topic = "";
+		CurrentUser = "";
+		password = "";
 		Userlist;
 		Messagelist;
 	}
@@ -53,16 +60,15 @@ public class BBoard {		// This is your main file that connects all classes.
 	// When the users chooses to quit, sayu "Bye!" and return from the login function
 	public void login(){
 		Scanner sc = new Scanner(System.in);
-		String input;
 		while(!input.equals("q" || "Q")) {
 			System.out.println("What is your username and password? ");
-			input = sc.nextLine();
-			if(input.equals("q" || "Q")) {
+			password = sc.nextLine();
+			if(password.equals("q" || "Q")) {
 				System.out.println("Bye! ");
 				return;
 			}
 			for(int i = 0; i < Userlist.size(); i++) {
-				if(input = Userlist[i]) {
+				if(password = Userlist[i].substring(indexOf(" "), Userlist[i].length -1)) {
 					CurrentUser = Userlist[i];
 				}
 			}
@@ -82,14 +88,49 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Q/q should reset the currentUser to 0 and then end return
 	// Note: if login() did not set a valid currentUser, function must immediately return without showing menu
 	public void run(){
-
+		Message mess = new Message();
+		User use = new User();
+		String temp;
+		if(CurrentUser.equals("")) {
+			return;
+		}
+		String input;
+		if(!CurrentUser.equals("") {
+			while(!input.equals("q", || "Q")) {
+				System.out.println("Display Messages ('D' or 'd'");
+				System.out.println("Add New Topic ('N', or 'n'");
+				System.out.println("Add Reply ('R', or 'r'");
+				System.out.println("Change Password('P', or 'p'");
+				System.out.println("Quit ('Q', or 'q'");
+				System.out.println("Please perform an action. ");
+				input = sc.nextLine();
+				if(input.equals("D" || "d")) {
+					mess.print(1);
+				}
+				else if(input.equals("N" || "n")) {
+					addTopic();
+				}
+				else if(input.equals("R" || "r")) {
+					addReply();
+				}
+				else if(input.equals("P" || "p")) {
+					use.setPassword(password, temp);
+				}
+				else if(input.equals("Q" || "q")) {
+					return;
+				}
+				else {
+					System.out.println("Try again. ");
+				}
+			}
+		}
 	}
 
 	// Traverse the BBoard's message list, and invote the print function on Topic objects ONLY
 	// It will then be the responsibility of the Topic object to invoke the print function recursively on its own replies
 	// The BBoard display function will ignore all reply objects in its message list
 	private void display(){
-
+		
 	}
 
 
