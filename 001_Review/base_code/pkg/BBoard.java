@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 public class BBoard {		// This is your main file that connects all classes.
 	// Think about what your global variables need to be.
+	Scanner sc = new Scanner(System.in);
+	Topic top = new Topic();
+	Message mess = new Message();
 	public ArrayList<User> Userlist = new ArrayList<User>();
 	public ArrayList<String> Messagelist = new ArrayList<String>();
 	public String title; 
@@ -41,7 +44,7 @@ public class BBoard {		// This is your main file that connects all classes.
 		Scanner sc = new Scanner(info);
 		int linenumber = 1;
 		while(sc.hasNextLine()) {
-			String Line = sc.nextLine;
+			String Line = sc.nextLine();
 			String temp = new String(Line);
 			int x = temp.indexOf(" ");
 			String usr = temp.substring(0, x);
@@ -60,7 +63,7 @@ public class BBoard {		// This is your main file that connects all classes.
 	// When the users chooses to quit, sayu "Bye!" and return from the login function
 	public void login(){
 		Scanner sc = new Scanner(System.in);
-		while(!input.equals("q" || "Q")) {
+		while(!password.equals("q" || "Q")) {
 			System.out.println("What is your username and password? ");
 			password = sc.nextLine();
 			if(password.equals("q" || "Q")) {
@@ -68,7 +71,7 @@ public class BBoard {		// This is your main file that connects all classes.
 				return;
 			}
 			for(int i = 0; i < Userlist.size(); i++) {
-				if(password = Userlist[i].substring(indexOf(" "), Userlist[i].length -1)) {
+				if(password.equals(Userlist[i].substring(indexOf(" "), Userlist[i].length -1))) {
 					CurrentUser = Userlist[i];
 				}
 			}
@@ -88,15 +91,13 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Q/q should reset the currentUser to 0 and then end return
 	// Note: if login() did not set a valid currentUser, function must immediately return without showing menu
 	public void run(){
-		Message mess = new Message();
-		User use = new User();
 		String temp;
 		if(CurrentUser.equals("")) {
 			return;
 		}
 		String input;
-		if(!CurrentUser.equals("") {
-			while(!input.equals("q", || "Q")) {
+		if(!CurrentUser.equals("")) {
+			while(!input.equals("q" || "Q")) {
 				System.out.println("Display Messages ('D' or 'd'");
 				System.out.println("Add New Topic ('N', or 'n'");
 				System.out.println("Add Reply ('R', or 'r'");
@@ -105,7 +106,7 @@ public class BBoard {		// This is your main file that connects all classes.
 				System.out.println("Please perform an action. ");
 				input = sc.nextLine();
 				if(input.equals("D" || "d")) {
-					mess.print(1);
+					display();
 				}
 				else if(input.equals("N" || "n")) {
 					addTopic();
@@ -114,7 +115,7 @@ public class BBoard {		// This is your main file that connects all classes.
 					addReply();
 				}
 				else if(input.equals("P" || "p")) {
-					use.setPassword(password, temp);
+					setPassword();
 				}
 				else if(input.equals("Q" || "q")) {
 					return;
@@ -130,7 +131,11 @@ public class BBoard {		// This is your main file that connects all classes.
 	// It will then be the responsibility of the Topic object to invoke the print function recursively on its own replies
 	// The BBoard display function will ignore all reply objects in its message list
 	private void display(){
-		
+		for(int i = 0; i < Messagelist.size(); i++) {
+			if(Messagelist[i].equals(top())) {
+				mess.print(1)
+			}
+		}
 	}
 
 
@@ -149,7 +154,14 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Once the Topic has been constructed, add it to the messageList
 	// This should invoke your inheritance of Topic to Message
 	private void addTopic(){
-
+		System.out.println("Create a new Topic! ");
+		System.out.print("Subject: ");
+		String subject = sc.nextLine();
+		System.out.print("Body: ");
+		String body = sc.nextLine();
+		for(int i = 0; i < Messagelist.size(); i++) {
+			Messagelist.add(top(CurrentUser, subject, body, i+1));
+		}
 	}
 
 	// This function asks the user to enter a reply to a given Message (which may be either a Topic or a Reply, so we can handle nested replies).

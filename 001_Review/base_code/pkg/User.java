@@ -42,11 +42,12 @@ public class User {
 	// Also, a default User cannot have its password changed. 
 	// Return true if password changed, return false if not.
 	public boolean setPassword(String oldPass, String newPass){
-		if(name.equals("") && password.equals("")) {	
+		if(name.equals("") && password.equals(""))
 			return false;
 		}
 		if(oldPass.equals(password)) {
-			password = newPass;
+			password = newPass
+			oldPass = newPass;
 			return true;
 		}
 		return false; 
